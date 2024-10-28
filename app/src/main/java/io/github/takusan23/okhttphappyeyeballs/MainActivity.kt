@@ -67,6 +67,7 @@ class PriorityIpv4Dns() : Dns {
     }
 }
 
+/** OkHttp 非同期モードのコールバックを Kotlin Coroutines に対応させたもの */
 private suspend fun Call.suspendExecute() = suspendCancellableCoroutine { cancellableContinuation ->
     enqueue(object : Callback {
         override fun onFailure(call: Call, e: IOException) {
@@ -115,6 +116,7 @@ private fun MainScreen() {
                         errorDialogText.value = response.code.toString()
                         return@launch
                     }
+                    // Downloads/OkHttpHappyEyeballs フォルダに保存
                     val fileContentValues = contentValuesOf(
                         MediaStore.Downloads.DISPLAY_NAME to System.currentTimeMillis().toString(),
                         MediaStore.Downloads.RELATIVE_PATH to "${Environment.DIRECTORY_DOWNLOADS}/OkHttpHappyEyeballs"
@@ -182,7 +184,6 @@ private fun MainScreen() {
             Button(onClick = { startDownload() }) {
                 Text(text = "ダウンロード開始")
             }
-
         }
     }
 }
